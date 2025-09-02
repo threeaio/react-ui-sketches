@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { type JSX } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { XIcon } from "lucide-react";
 
@@ -21,8 +21,12 @@ export function ExtendFromGridItem({ title, icon, description, isExpanded, setIs
 
 
 	return (
-        <motion.div layout className={cn('h-full', isExpanded ? "col-span-2" : "")} transition={{ type: "spring", bounce: 0.25 }}>
-        <div className={cn("dark:bg-gray-900 bg-gray-100 p-6 transition-all duration-300 h-full min-h-48 rounded-[1.5rem]", isExpanded ? "pt-12 px-12 pb-12" : "p-6 ")}>
+        <motion.div 
+            layout 
+            className={cn('h-full min-h-48  dark:bg-gray-900 bg-gray-100 p-12', isExpanded ? "col-span-2 p-12" : "p-6")} 
+            transition={{ type: "spring", bounce: 0.25 }}
+            style={{borderRadius: 24}}
+        >
                 {
                     isExpanded && (
                         <motion.div 
@@ -63,6 +67,5 @@ export function ExtendFromGridItem({ title, icon, description, isExpanded, setIs
                     </motion.div >
                 )}
                 {/* </div> */}
-            </div>
         </motion.div>)
 }

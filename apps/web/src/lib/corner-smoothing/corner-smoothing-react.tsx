@@ -4,7 +4,7 @@ import React, {
   forwardRef,
   type HTMLAttributes,
   type ReactElement,
-  type ReactHTML,
+  type ElementType,
   type ReactNode,
   useCallback,
   useRef,
@@ -28,11 +28,11 @@ const omitUndefined = <T,>(
 
 type Props = {
   children: ReactNode;
-  as?: keyof ReactHTML | ComponentType<any>;
+  as?: ElementType;
 } & Options &
   DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 
-export const Squircle = forwardRef<unknown, Props>(
+export const Squircle = forwardRef<HTMLElement | null, Props>(
   (
     {
       children,
@@ -49,7 +49,7 @@ export const Squircle = forwardRef<unknown, Props>(
     },
     forwardedRef
   ): ReactElement => {
-    const funcRef = useRef<ReturnType<typeof squircleObserver>>();
+    const funcRef = useRef<ReturnType<typeof squircleObserver> | null>(null);
 
     const refCallback = useCallback(
       (el: HTMLElement | null) => {
@@ -72,8 +72,8 @@ export const Squircle = forwardRef<unknown, Props>(
 
         if (typeof forwardedRef === "function") {
           forwardedRef(el);
-        } else if (forwardedRef) {
-          forwardedRef.current = el;
+        } else if (forwardedRef != null) {
+          (forwardedRef as React.MutableRefObject<HTMLElement | null>).current = el;
         }
       },
       [
@@ -100,11 +100,11 @@ export const Squircle = forwardRef<unknown, Props>(
  * HOC that wraps `Component` and injects the squircle style.
  */
 export const squircle = <P,>(
-  Component: keyof ReactHTML | ComponentType<P>,
+  Component: ComponentType<P>,
   opts: Options
 ) =>
-  forwardRef((props: P, forwardedRef): ReactElement => {
-    const funcRef = useRef<ReturnType<typeof squircleObserver>>();
+  forwardRef<HTMLElement | null, P>((props, forwardedRef): ReactElement => {
+    const funcRef = useRef<ReturnType<typeof squircleObserver> | null>(null);
 
     const refCallback = useCallback(
       (el: HTMLElement | null) => {
@@ -116,8 +116,8 @@ export const squircle = <P,>(
 
         if (typeof forwardedRef === "function") {
           forwardedRef(el);
-        } else if (forwardedRef) {
-          forwardedRef.current = el;
+        } else if (forwardedRef != null) {
+          (forwardedRef as React.MutableRefObject<HTMLElement | null>).current = el;
         }
       },
       [opts]

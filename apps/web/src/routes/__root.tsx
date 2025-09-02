@@ -49,7 +49,8 @@ function RootDocument() {
 				<HeadContent />
 			</head>
 			<body>
-				<div className="grid h-svh grid-rows-[auto_1fr]">
+				{/* grid-rows-[auto_1fr] */ }
+				<div className=" h-svh ">
 					<Header />
 					{isFetching ? <Loader /> : <Outlet />}
 				</div>

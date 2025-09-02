@@ -1,5 +1,5 @@
 import { MorphExtendFromList } from '@/components/features'
-import { ClientOnly, createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/squircle-expand')({
   component: RouteComponent,

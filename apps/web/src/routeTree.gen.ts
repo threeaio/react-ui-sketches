@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SquircleExpandRouteImport } from './routes/squircle-expand'
 import { Route as MenuExtendRouteImport } from './routes/menu-extend'
+import { Route as IntactChildsRouteImport } from './routes/intact-childs'
 import { Route as GridExpandRouteImport } from './routes/grid-expand'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const SquircleExpandRoute = SquircleExpandRouteImport.update({
 const MenuExtendRoute = MenuExtendRouteImport.update({
   id: '/menu-extend',
   path: '/menu-extend',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntactChildsRoute = IntactChildsRouteImport.update({
+  id: '/intact-childs',
+  path: '/intact-childs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GridExpandRoute = GridExpandRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/grid-expand': typeof GridExpandRoute
+  '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
   '/squircle-expand': typeof SquircleExpandRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/grid-expand': typeof GridExpandRoute
+  '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
   '/squircle-expand': typeof SquircleExpandRoute
 }
@@ -51,20 +59,38 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/grid-expand': typeof GridExpandRoute
+  '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
   '/squircle-expand': typeof SquircleExpandRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/grid-expand' | '/menu-extend' | '/squircle-expand'
+  fullPaths:
+    | '/'
+    | '/grid-expand'
+    | '/intact-childs'
+    | '/menu-extend'
+    | '/squircle-expand'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/grid-expand' | '/menu-extend' | '/squircle-expand'
-  id: '__root__' | '/' | '/grid-expand' | '/menu-extend' | '/squircle-expand'
+  to:
+    | '/'
+    | '/grid-expand'
+    | '/intact-childs'
+    | '/menu-extend'
+    | '/squircle-expand'
+  id:
+    | '__root__'
+    | '/'
+    | '/grid-expand'
+    | '/intact-childs'
+    | '/menu-extend'
+    | '/squircle-expand'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GridExpandRoute: typeof GridExpandRoute
+  IntactChildsRoute: typeof IntactChildsRoute
   MenuExtendRoute: typeof MenuExtendRoute
   SquircleExpandRoute: typeof SquircleExpandRoute
 }
@@ -83,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/menu-extend'
       fullPath: '/menu-extend'
       preLoaderRoute: typeof MenuExtendRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/intact-childs': {
+      id: '/intact-childs'
+      path: '/intact-childs'
+      fullPath: '/intact-childs'
+      preLoaderRoute: typeof IntactChildsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/grid-expand': {
@@ -105,6 +138,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GridExpandRoute: GridExpandRoute,
+  IntactChildsRoute: IntactChildsRoute,
   MenuExtendRoute: MenuExtendRoute,
   SquircleExpandRoute: SquircleExpandRoute,
 }

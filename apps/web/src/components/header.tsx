@@ -7,7 +7,8 @@ export default function Header() {
 		{ to: "/", label: "Home" }, 
 		{ to: "/squircle-expand", label: "Squircle Expand" },
 		{ to: "/menu-extend", label: "Menu Extend" },
-		{ to: "/grid-expand", label: "Grid Expand" }
+		{ to: "/grid-expand", label: "Grid Expand" },
+		{ to: "/intact-childs", label: "Intact Childs" }
 	] as const;
 
 	return (

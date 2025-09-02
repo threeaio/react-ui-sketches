@@ -2,7 +2,7 @@
 "use client"
 
 import { ExtendFromGridItem, type ExtendFromGridItemProps } from "./extend-from-grid-item";
-import { EyeIcon, ImageIcon, PenIcon } from "lucide-react";
+import { EyeIcon, ImageIcon } from "lucide-react";
 import { useState } from "react";
 
 export function ExtendFromGrid() {
