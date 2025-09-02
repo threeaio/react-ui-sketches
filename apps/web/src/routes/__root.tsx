@@ -1,12 +1,12 @@
 import { Toaster } from "@/components/ui/sonner";
 
 import {
+	ClientOnly,
 	HeadContent,
 	Outlet,
 	Scripts,
 	createRootRouteWithContext,
 	useRouterState,
-	useRouteContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Header from "../components/header";
@@ -28,6 +28,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 			{
 				title: "My App",
 			},
+		
 		],
 		links: [
 			{
@@ -43,7 +44,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 function RootDocument() {
 	const isFetching = useRouterState({ select: (s) => s.isLoading });
 	return (
-		<html lang="en" className="dark">
+		<html lang="en" className="">
 			<head>
 				<HeadContent />
 			</head>
@@ -52,7 +53,7 @@ function RootDocument() {
 					<Header />
 					{isFetching ? <Loader /> : <Outlet />}
 				</div>
-				<Toaster richColors />
+					<Toaster richColors />
 				<TanStackRouterDevtools position="bottom-left" />
 				<Scripts />
 			</body>
