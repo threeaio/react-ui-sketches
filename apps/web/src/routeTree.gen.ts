@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TeamViewerRouteImport } from './routes/team-viewer'
 import { Route as SquircleExpandRouteImport } from './routes/squircle-expand'
 import { Route as MenuExtendRouteImport } from './routes/menu-extend'
 import { Route as IntactChildsRouteImport } from './routes/intact-childs'
 import { Route as GridExpandRouteImport } from './routes/grid-expand'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TeamViewerRoute = TeamViewerRouteImport.update({
+  id: '/team-viewer',
+  path: '/team-viewer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SquircleExpandRoute = SquircleExpandRouteImport.update({
   id: '/squircle-expand',
   path: '/squircle-expand',
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
   '/squircle-expand': typeof SquircleExpandRoute
+  '/team-viewer': typeof TeamViewerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
   '/squircle-expand': typeof SquircleExpandRoute
+  '/team-viewer': typeof TeamViewerRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,6 +70,7 @@ export interface FileRoutesById {
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
   '/squircle-expand': typeof SquircleExpandRoute
+  '/team-viewer': typeof TeamViewerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -71,6 +80,7 @@ export interface FileRouteTypes {
     | '/intact-childs'
     | '/menu-extend'
     | '/squircle-expand'
+    | '/team-viewer'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -78,6 +88,7 @@ export interface FileRouteTypes {
     | '/intact-childs'
     | '/menu-extend'
     | '/squircle-expand'
+    | '/team-viewer'
   id:
     | '__root__'
     | '/'
@@ -85,6 +96,7 @@ export interface FileRouteTypes {
     | '/intact-childs'
     | '/menu-extend'
     | '/squircle-expand'
+    | '/team-viewer'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,10 +105,18 @@ export interface RootRouteChildren {
   IntactChildsRoute: typeof IntactChildsRoute
   MenuExtendRoute: typeof MenuExtendRoute
   SquircleExpandRoute: typeof SquircleExpandRoute
+  TeamViewerRoute: typeof TeamViewerRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/team-viewer': {
+      id: '/team-viewer'
+      path: '/team-viewer'
+      fullPath: '/team-viewer'
+      preLoaderRoute: typeof TeamViewerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/squircle-expand': {
       id: '/squircle-expand'
       path: '/squircle-expand'
@@ -141,6 +161,7 @@ const rootRouteChildren: RootRouteChildren = {
   IntactChildsRoute: IntactChildsRoute,
   MenuExtendRoute: MenuExtendRoute,
   SquircleExpandRoute: SquircleExpandRoute,
+  TeamViewerRoute: TeamViewerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
