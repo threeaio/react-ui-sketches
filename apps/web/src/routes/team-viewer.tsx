@@ -1,4 +1,4 @@
-import { TeamViewer } from "@/components/features/team-viewer";
+import { TeamViewer } from "@/components/features";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/team-viewer")({

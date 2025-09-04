@@ -8,6 +8,7 @@ export default function Header() {
     { to: "/grid-expand", label: "Grid Expand" },
     { to: "/intact-childs", label: "Intact Childs" },
     { to: "/team-viewer", label: "Team Viewer" },
+    { to: "/stateful-button", label: "Stateful Button" },
   ] as const;
 
   return (

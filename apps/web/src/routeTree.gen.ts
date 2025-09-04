@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TeamViewerRouteImport } from './routes/team-viewer'
+import { Route as StatefulButtonRouteImport } from './routes/stateful-button'
 import { Route as SquircleExpandRouteImport } from './routes/squircle-expand'
 import { Route as MenuExtendRouteImport } from './routes/menu-extend'
 import { Route as IntactChildsRouteImport } from './routes/intact-childs'
@@ -19,6 +20,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const TeamViewerRoute = TeamViewerRouteImport.update({
   id: '/team-viewer',
   path: '/team-viewer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StatefulButtonRoute = StatefulButtonRouteImport.update({
+  id: '/stateful-button',
+  path: '/stateful-button',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SquircleExpandRoute = SquircleExpandRouteImport.update({
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
   '/squircle-expand': typeof SquircleExpandRoute
+  '/stateful-button': typeof StatefulButtonRoute
   '/team-viewer': typeof TeamViewerRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
   '/squircle-expand': typeof SquircleExpandRoute
+  '/stateful-button': typeof StatefulButtonRoute
   '/team-viewer': typeof TeamViewerRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
   '/squircle-expand': typeof SquircleExpandRoute
+  '/stateful-button': typeof StatefulButtonRoute
   '/team-viewer': typeof TeamViewerRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/intact-childs'
     | '/menu-extend'
     | '/squircle-expand'
+    | '/stateful-button'
     | '/team-viewer'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/intact-childs'
     | '/menu-extend'
     | '/squircle-expand'
+    | '/stateful-button'
     | '/team-viewer'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/intact-childs'
     | '/menu-extend'
     | '/squircle-expand'
+    | '/stateful-button'
     | '/team-viewer'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   IntactChildsRoute: typeof IntactChildsRoute
   MenuExtendRoute: typeof MenuExtendRoute
   SquircleExpandRoute: typeof SquircleExpandRoute
+  StatefulButtonRoute: typeof StatefulButtonRoute
   TeamViewerRoute: typeof TeamViewerRoute
 }
 
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/team-viewer'
       fullPath: '/team-viewer'
       preLoaderRoute: typeof TeamViewerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stateful-button': {
+      id: '/stateful-button'
+      path: '/stateful-button'
+      fullPath: '/stateful-button'
+      preLoaderRoute: typeof StatefulButtonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/squircle-expand': {
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   IntactChildsRoute: IntactChildsRoute,
   MenuExtendRoute: MenuExtendRoute,
   SquircleExpandRoute: SquircleExpandRoute,
+  StatefulButtonRoute: StatefulButtonRoute,
   TeamViewerRoute: TeamViewerRoute,
 }
 export const routeTree = rootRouteImport
