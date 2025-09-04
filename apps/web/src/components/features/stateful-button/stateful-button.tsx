@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Check, Loader2, X } from "lucide-react";
 import { AnimatePresence, motion, type MotionProps } from "motion/react";
 import { type UseMutationResult } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const stateFulButtonVariants = cva(
   "rounded-xl inline-flex justify-center items-center  disabled:pointer-events-none disabled:opacity-50 outline-none overflow-hidden ",
@@ -29,9 +29,7 @@ const stateFulButtonVariants = cva(
   },
 );
 
-type StatefulButtonProps = {
-  mutation: UseMutationResult<unknown, Error, void, unknown>;
-} & React.ComponentProps<"button"> &
+type StatefulButtonProps = React.ComponentProps<"button"> &
   VariantProps<typeof stateFulButtonVariants> &
   MotionProps;
 
@@ -42,12 +40,19 @@ function ButtonContent({
   state: StatefulButtonProps["state"];
   children: React.ReactNode;
 }) {
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    setFirstRender(false);
+  }, []);
+
   return (
     <span className="flex items-center gap-2 whitespace-nowrap">
+      {/* <AnimatePresence> */}
       {state === "pending" && (
         <motion.span
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.3 } }}
+          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.4 } }}
           layout="preserve-aspect"
           className="flex items-center gap-2 whitespace-nowrap"
         >
@@ -59,7 +64,7 @@ function ButtonContent({
       {state === "success" && (
         <motion.span
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.3 } }}
+          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.4 } }}
           layout="preserve-aspect"
           className="flex items-center gap-2 whitespace-nowrap"
         >
@@ -68,7 +73,7 @@ function ButtonContent({
             animate={{
               opacity: 1,
               x: 0,
-              transition: { duration: 0.3, delay: 0.4 },
+              transition: { duration: 0.3, delay: 0.6 },
             }}
           >
             <Check className="size-8 -ml-2 inline-block" />
@@ -80,7 +85,7 @@ function ButtonContent({
       {state === "error" && (
         <motion.span
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.3 } }}
+          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.4 } }}
           layout="preserve-aspect"
           className="flex items-center gap-2 whitespace-nowrap"
         >
@@ -89,7 +94,7 @@ function ButtonContent({
             animate={{
               opacity: 1,
               x: 0,
-              transition: { duration: 0.3, delay: 0.4 },
+              transition: { duration: 0.3, delay: 0.6 },
             }}
           >
             <X className="size-8 -ml-2 inline-block" />
@@ -102,13 +107,20 @@ function ButtonContent({
       {state === "idle" && (
         <motion.span
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.2, delay: 0 } }}
+          animate={{
+            opacity: 1,
+            transition: {
+              duration: firstRender ? 0 : 0.2,
+              delay: firstRender ? 0 : 0.4,
+            },
+          }}
           layout="preserve-aspect"
         >
           {" "}
           {children}{" "}
         </motion.span>
       )}
+      {/* </AnimatePresence> */}
     </span>
   );
 }
@@ -118,32 +130,15 @@ function StatefulButton({
   state,
   size,
   children,
-  mutation,
   ...props
 }: StatefulButtonProps) {
-  const [timeout, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-
   return (
     <motion.button
-      onClick={() => {
-        if (timeout) {
-          clearTimeout(timeout);
-        }
-        mutation.mutate(undefined, {
-          onSettled: () => {
-            const fooTimeout = setTimeout(() => {
-              mutation.reset();
-            }, 5000);
-            setTimeoutId(fooTimeout);
-            console.log("timeout", timeout);
-          },
-        });
-      }}
       layout={true}
       data-slot="button"
       className={cn(stateFulButtonVariants({ size, state, className }))}
       style={{
-        borderRadius: 16,
+        borderRadius: 12,
       }}
       transition={{ type: "spring", bounce: 0.08 }}
       {...props}

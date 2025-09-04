@@ -2,7 +2,7 @@ import { useFakeRequest } from "@/components/features/stateful-button/backend";
 import { StatefulButton } from "./stateful-button";
 
 export const StatefulButtonShowcase = () => {
-  const fakeRequest = useFakeRequest();
+  const fakeRequest = useFakeRequest(true);
 
   return (
     <div className="p-12 flex-1 flex flex-col gap-4 justify-center items-start">
@@ -10,7 +10,7 @@ export const StatefulButtonShowcase = () => {
       <StatefulButton
         size="lg"
         state={fakeRequest.status}
-        mutation={fakeRequest}
+        onClick={() => fakeRequest.status !== "pending" && fakeRequest.mutate()}
       >
         Stateful Button
       </StatefulButton>

@@ -1,18 +1,15 @@
+import { useState } from "react";
+
 import { useMutation } from "@tanstack/react-query";
+import { useRef } from "react";
 
 const fakeResponseSuccess = {
   success: true,
   message: "Request successful",
 };
 
-const fakeResponseError = (e: Error) => {
-  return {
-    success: false,
-    message: e.message,
-  };
-};
-
 export const fakeRequest = () => {
+  console.log("fakeRequest");
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (Math.random() > 0.5) {
@@ -23,8 +20,28 @@ export const fakeRequest = () => {
   });
 };
 
-export const useFakeRequest = () => {
-  return useMutation({
+export const useFakeRequest = (selfReset = false) => {
+  const resetRef = useRef<() => void>(() => {});
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+
+  const mutation = useMutation({
     mutationFn: fakeRequest,
+    onMutate: () => {
+      console.log("onMutate");
+      if (timeoutId) {
+        console.log("onMutate clear timeout");
+        console.log("timeout", timeoutId);
+        clearTimeout(timeoutId);
+        setTimeoutId(null);
+      }
+    },
+    onSettled: () => {
+      if (selfReset) {
+        const timeoutHere = setTimeout(() => resetRef.current(), 5000);
+        setTimeoutId(timeoutHere);
+      }
+    },
   });
+  resetRef.current = () => mutation.reset();
+  return mutation;
 };
