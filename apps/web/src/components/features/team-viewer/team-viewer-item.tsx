@@ -53,7 +53,7 @@ export function TeamViewerItem({
       <div
         className={cn(
           "h-20 flex items-center justify-center ",
-          isFocused && "w-30",
+          isFocused && "w-20 min-w-20",
         )}
       >
         <img

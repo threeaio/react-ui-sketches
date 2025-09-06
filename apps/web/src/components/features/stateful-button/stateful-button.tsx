@@ -1,3 +1,4 @@
+import { AnimatedCheck } from "@/components/features";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Check, Loader2, X } from "lucide-react";
@@ -51,7 +52,7 @@ function ButtonContent({
       {state === "pending" && (
         <motion.span
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.4 } }}
+          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.2 } }}
           layout="preserve-aspect"
           className="flex items-center gap-2 whitespace-nowrap"
         >
@@ -61,24 +62,23 @@ function ButtonContent({
       )}
 
       {state === "success" && (
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.4 } }}
-          layout="preserve-aspect"
-          className="flex items-center gap-2 whitespace-nowrap"
-        >
+        <span className="flex items-center gap-2 whitespace-nowrap">
+          <AnimatedCheck
+            isChecked={true}
+            size={28}
+            delay={0.2}
+            className="-ml-2"
+          />
           <motion.span
-            initial={{ opacity: 0, x: -6 }}
+            initial={{ opacity: 0 }}
             animate={{
               opacity: 1,
-              x: 0,
-              transition: { duration: 0.3, delay: 0.6 },
+              transition: { duration: 0.3, delay: 0.3 },
             }}
           >
-            <Check className="size-8 -ml-2 inline-block" />
+            We got something
           </motion.span>
-          We got something
-        </motion.span>
+        </span>
       )}
 
       {state === "error" && (
@@ -139,7 +139,7 @@ function StatefulButton({
       style={{
         borderRadius: 12,
       }}
-      transition={{ type: "spring", bounce: 0.08 }}
+      transition={{ type: "spring", bounce: 0.38, visualDuration: 0.2 }}
       {...props}
     >
       <ButtonContent state={state}>{children}</ButtonContent>

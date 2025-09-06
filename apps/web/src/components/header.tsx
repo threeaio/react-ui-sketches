@@ -8,17 +8,18 @@ export default function Header() {
     { to: "/grid-expand", label: "Grid Expand" },
     { to: "/intact-childs", label: "Intact Childs" },
     { to: "/team-viewer", label: "Team Viewer" },
+    { to: "/animated-svg", label: "Animated Svg" },
     { to: "/stateful-button", label: "Stateful Button" },
   ] as const;
 
   return (
     <div>
-      <div className="flex flex-row items-center justify-between h-header px-8">
-        <nav className="flex gap-4 text-sm">
+      <div className="flex  items-center justify-between h-auto px-4 py-2">
+        <nav className="flex gap-4 text-sm flex-wrap">
           {links.map(({ to, label }) => {
             return (
               <Link
-                className="rounded-lg px-4 py-2 bg-transparent transition-all duration-300"
+                className="rounded-lg px-4 py-2 bg-transparent transition-all duration-300 whitespace-nowrap"
                 key={to}
                 to={to}
                 activeProps={{

@@ -15,6 +15,7 @@ import { Route as SquircleExpandRouteImport } from './routes/squircle-expand'
 import { Route as MenuExtendRouteImport } from './routes/menu-extend'
 import { Route as IntactChildsRouteImport } from './routes/intact-childs'
 import { Route as GridExpandRouteImport } from './routes/grid-expand'
+import { Route as AnimatedSvgRouteImport } from './routes/animated-svg'
 import { Route as IndexRouteImport } from './routes/index'
 
 const TeamViewerRoute = TeamViewerRouteImport.update({
@@ -47,6 +48,11 @@ const GridExpandRoute = GridExpandRouteImport.update({
   path: '/grid-expand',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnimatedSvgRoute = AnimatedSvgRouteImport.update({
+  id: '/animated-svg',
+  path: '/animated-svg',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -55,6 +61,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/animated-svg': typeof AnimatedSvgRoute
   '/grid-expand': typeof GridExpandRoute
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/animated-svg': typeof AnimatedSvgRoute
   '/grid-expand': typeof GridExpandRoute
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/animated-svg': typeof AnimatedSvgRoute
   '/grid-expand': typeof GridExpandRoute
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/animated-svg'
     | '/grid-expand'
     | '/intact-childs'
     | '/menu-extend'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/animated-svg'
     | '/grid-expand'
     | '/intact-childs'
     | '/menu-extend'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/animated-svg'
     | '/grid-expand'
     | '/intact-childs'
     | '/menu-extend'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnimatedSvgRoute: typeof AnimatedSvgRoute
   GridExpandRoute: typeof GridExpandRoute
   IntactChildsRoute: typeof IntactChildsRoute
   MenuExtendRoute: typeof MenuExtendRoute
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GridExpandRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/animated-svg': {
+      id: '/animated-svg'
+      path: '/animated-svg'
+      fullPath: '/animated-svg'
+      preLoaderRoute: typeof AnimatedSvgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnimatedSvgRoute: AnimatedSvgRoute,
   GridExpandRoute: GridExpandRoute,
   IntactChildsRoute: IntactChildsRoute,
   MenuExtendRoute: MenuExtendRoute,

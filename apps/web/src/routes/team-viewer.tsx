@@ -6,5 +6,9 @@ export const Route = createFileRoute("/team-viewer")({
 });
 
 function RouteComponent() {
-  return <TeamViewer />;
+  return (
+    <div className="px-12">
+      <TeamViewer />
+    </div>
+  );
 }
