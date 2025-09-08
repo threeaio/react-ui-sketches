@@ -1,4 +1,5 @@
 import { AnimatedCheck, AnimatedSmileState } from "@/components/features";
+import { AnimatedIsoCube } from "@/components/features/animated-svg/animated-iso-cube";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { createFileRoute } from "@tanstack/react-router";
@@ -10,7 +11,9 @@ export const Route = createFileRoute("/animated-svg")({
 
 function RouteComponent() {
   const [isChecked, setIsChecked] = useState(false);
-  const [state, setState] = useState<"idle" | "success" | "error">("idle");
+  const [state, setState] = useState<"idle" | "pending" | "success" | "error">(
+    "idle",
+  );
   return (
     <div className="flex flex-col items-end justify-center gap-4 max-w-md mx-auto bg-muted p-4 rounded-xl mt-12">
       <div className="flex items-center justify-between w-full mt-6 ">
@@ -50,6 +53,12 @@ function RouteComponent() {
         </div>
         <AnimatedSmileState state={isChecked ? "error" : "idle"} />
       </div>
+      <div className="flex items-center justify-between w-full bg-background p-4 rounded-xl">
+        <div className="flex items-center justify-center">
+          Animate Smile Pending
+        </div>
+        <AnimatedSmileState state={isChecked ? "pending" : "idle"} />
+      </div>
       <div className="flex items-center justify-between w-full mt-6 ">
         <div className="font-medium opacity-50">State</div>
         <div>
@@ -65,6 +74,10 @@ function RouteComponent() {
               <Label htmlFor="idle">Idle</Label>
             </div>
             <div className="flex items-center justify-center gap-2">
+              <RadioGroupItem value="pending" id="pending" />
+              <Label htmlFor="pending">Pending</Label>
+            </div>
+            <div className="flex items-center justify-center gap-2">
               <RadioGroupItem value="success" id="success" />
               <Label htmlFor="success">Success</Label>
             </div>
@@ -78,6 +91,10 @@ function RouteComponent() {
       <div className="flex items-center justify-between w-full bg-background p-4 rounded-xl">
         <div className="flex items-center justify-center">Animate Smile</div>
         <AnimatedSmileState state={state} />
+      </div>
+      <div className="flex items-center justify-between w-full bg-background p-4 rounded-xl">
+        <div className="flex items-center justify-center">Animate Iso Cube</div>
+        <AnimatedIsoCube />
       </div>
     </div>
   );
