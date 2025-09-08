@@ -15,6 +15,7 @@ import { Route as SquircleExpandRouteImport } from './routes/squircle-expand'
 import { Route as MenuExtendRouteImport } from './routes/menu-extend'
 import { Route as IntactChildsRouteImport } from './routes/intact-childs'
 import { Route as GridExpandRouteImport } from './routes/grid-expand'
+import { Route as BentoGridRouteImport } from './routes/bento-grid'
 import { Route as AnimatedSvgRouteImport } from './routes/animated-svg'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -48,6 +49,11 @@ const GridExpandRoute = GridExpandRouteImport.update({
   path: '/grid-expand',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BentoGridRoute = BentoGridRouteImport.update({
+  id: '/bento-grid',
+  path: '/bento-grid',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AnimatedSvgRoute = AnimatedSvgRouteImport.update({
   id: '/animated-svg',
   path: '/animated-svg',
@@ -62,6 +68,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/animated-svg': typeof AnimatedSvgRoute
+  '/bento-grid': typeof BentoGridRoute
   '/grid-expand': typeof GridExpandRoute
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/animated-svg': typeof AnimatedSvgRoute
+  '/bento-grid': typeof BentoGridRoute
   '/grid-expand': typeof GridExpandRoute
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/animated-svg': typeof AnimatedSvgRoute
+  '/bento-grid': typeof BentoGridRoute
   '/grid-expand': typeof GridExpandRoute
   '/intact-childs': typeof IntactChildsRoute
   '/menu-extend': typeof MenuExtendRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/animated-svg'
+    | '/bento-grid'
     | '/grid-expand'
     | '/intact-childs'
     | '/menu-extend'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/animated-svg'
+    | '/bento-grid'
     | '/grid-expand'
     | '/intact-childs'
     | '/menu-extend'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/animated-svg'
+    | '/bento-grid'
     | '/grid-expand'
     | '/intact-childs'
     | '/menu-extend'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnimatedSvgRoute: typeof AnimatedSvgRoute
+  BentoGridRoute: typeof BentoGridRoute
   GridExpandRoute: typeof GridExpandRoute
   IntactChildsRoute: typeof IntactChildsRoute
   MenuExtendRoute: typeof MenuExtendRoute
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GridExpandRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bento-grid': {
+      id: '/bento-grid'
+      path: '/bento-grid'
+      fullPath: '/bento-grid'
+      preLoaderRoute: typeof BentoGridRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/animated-svg': {
       id: '/animated-svg'
       path: '/animated-svg'
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnimatedSvgRoute: AnimatedSvgRoute,
+  BentoGridRoute: BentoGridRoute,
   GridExpandRoute: GridExpandRoute,
   IntactChildsRoute: IntactChildsRoute,
   MenuExtendRoute: MenuExtendRoute,

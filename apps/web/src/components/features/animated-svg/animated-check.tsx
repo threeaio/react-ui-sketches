@@ -54,7 +54,7 @@ export const AnimatedCheck = ({
 
   const circleVariants = {
     isUnchecked: {
-      scale: 0.7,
+      scale: 0.9,
       opacity: 0,
       transition: { type: spring, bounce: 0.35 },
     },

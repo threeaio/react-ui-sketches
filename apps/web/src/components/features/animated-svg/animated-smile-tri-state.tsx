@@ -1,26 +1,15 @@
 import { easeIn, easeOut, motion, spring } from "motion/react";
-import { useEffect, useState } from "react";
 
-export const AnimatedSmile = ({
-  isChecked,
+export const AnimatedSmileState = ({
   size = 50,
-  delay = 0,
   className,
+  state,
 }: {
-  isChecked: boolean;
   size?: number;
-  delay?: number;
   className?: string;
+  state: "idle" | "success" | "error";
 }) => {
-  const [isCheckedInternal, setIsCheckedInternal] = useState(false);
-
   const svgSize = 50;
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsCheckedInternal(isChecked);
-    }, delay * 1000);
-  }, [isChecked]);
 
   // Eyes: crosses that extend from the center (appear as dots initially)
 
@@ -36,13 +25,12 @@ export const AnimatedSmile = ({
 
   const getEyeDotProps = (side: "left" | "right") => {
     const { cx, cy } = getEyeCenter(side);
-    const r = svgSize * 0.32; // ~1.6 for 50
-    return { cx, cy, r };
+    return { cx, cy };
   };
 
   const getEyeDiagonalSegments = (side: "left" | "right") => {
     const { cx, cy } = getEyeCenter(side);
-    const crossOffset = 4;
+    const crossOffset = 3;
     return [
       // Diagonal 1: two segments from center outwards
       { x1: cx, y1: cy, x2: cx - crossOffset, y2: cy - crossOffset },
@@ -53,33 +41,49 @@ export const AnimatedSmile = ({
     ] as const;
   };
 
-  const getMouthPath = (sad: boolean) => {
+  const getMouthPath = (state: "idle" | "success" | "error") => {
     const centerX = svgSize / 2;
-    const width = sad ? svgSize - 30 : svgSize - 40;
-    const startY = sad ? svgSize - 15 : svgSize - 20;
-    const bezierOffset = sad ? 6 : 0;
+    const width =
+      state === "success" || state === "error" ? svgSize - 30 : svgSize - 40;
+    const startY =
+      state === "error"
+        ? svgSize - 15
+        : state === "success"
+          ? svgSize - 16
+          : svgSize - 20;
+    const bezierOffset = state === "success" ? -5 : state === "error" ? 6 : 0;
     return `M ${centerX - width / 2} ${startY} Q ${centerX} ${startY - bezierOffset} ${centerX + width / 2} ${startY}`;
   };
 
   // Mouth (neutral: straight line) animate to (sad: curved up)
   const mouthVariants = {
-    isUnchecked: {
-      d: getMouthPath(false),
-      transition: { duration: 0.25, ease: easeIn },
+    idle: {
+      d: getMouthPath("idle"),
+      transition: { duration: 0.25, ease: easeOut },
     },
-    isChecked: {
-      d: getMouthPath(true),
-      transition: { duration: 0.3, ease: easeOut, delay: 0.05 },
+    error: {
+      d: getMouthPath("error"),
+      rotate: -12,
+      transition: { duration: 0.5, ease: easeOut, delay: 0 },
+    },
+    success: {
+      d: getMouthPath("success"),
+      transition: { duration: 0.2, ease: easeOut },
     },
   } as const;
 
   const circleVariants = {
-    isUnchecked: {
+    idle: {
       scale: 0.9,
       opacity: 1,
       transition: { type: spring, bounce: 0.35 },
     },
-    isChecked: {
+    error: {
+      scale: 1,
+      opacity: 1,
+      transition: { type: spring, bounce: 0.35 },
+    },
+    success: {
       scale: 1,
       opacity: 1,
       transition: { type: spring, bounce: 0.35 },
@@ -106,8 +110,8 @@ export const AnimatedSmile = ({
         stroke="currentColor"
         strokeWidth="3"
         variants={circleVariants}
-        initial="isUnchecked"
-        animate={isCheckedInternal ? "isChecked" : "isUnchecked"}
+        initial="idle"
+        animate={state}
       />
       {/* Eyes: crosses that grow from a dot at the center */}
       {leftSegments.map((seg, idx) => (
@@ -118,16 +122,17 @@ export const AnimatedSmile = ({
           x2={leftDot.cx}
           y2={leftDot.cy}
           stroke="currentColor"
-          strokeWidth="2.4"
+          strokeWidth={2.4}
           strokeLinecap="round"
           animate={
-            isCheckedInternal
+            state == "error"
               ? { x1: seg.x1, y1: seg.y1, x2: seg.x2, y2: seg.y2 }
               : {
                   x1: leftDot.cx,
                   y1: leftDot.cy,
                   x2: leftDot.cx,
                   y2: leftDot.cy,
+                  strokeWidth: state == "idle" ? 3 : 4,
                 }
           }
           transition={{
@@ -145,16 +150,22 @@ export const AnimatedSmile = ({
           x2={rightDot.cx}
           y2={rightDot.cy}
           stroke="currentColor"
-          strokeWidth="2.4"
+          strokeWidth={2.4}
           strokeLinecap="round"
           animate={
-            isCheckedInternal
-              ? { x1: seg.x1, y1: seg.y1, x2: seg.x2, y2: seg.y2 }
+            state == "error"
+              ? {
+                  x1: seg.x1,
+                  y1: seg.y1,
+                  x2: seg.x2,
+                  y2: seg.y2,
+                }
               : {
                   x1: rightDot.cx,
                   y1: rightDot.cy,
                   x2: rightDot.cx,
                   y2: rightDot.cy,
+                  strokeWidth: state == "idle" ? 3 : 4,
                 }
           }
           transition={{
@@ -172,8 +183,8 @@ export const AnimatedSmile = ({
         strokeWidth="2.5"
         strokeLinecap="round"
         variants={mouthVariants}
-        initial="isUnchecked"
-        animate={isCheckedInternal ? "isChecked" : "isUnchecked"}
+        initial="idle"
+        animate={state}
       />
     </svg>
   );

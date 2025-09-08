@@ -6,7 +6,7 @@ import { motion, type MotionProps } from "motion/react";
 import { useEffect, useState } from "react";
 
 const stateFulButtonVariants = cva(
-  "rounded-xl inline-flex justify-center items-center  disabled:pointer-events-none disabled:opacity-50 outline-none overflow-hidden ",
+  "rounded-xl inline-flex justify-center items-center uppercase font-bold tracking-widest  disabled:pointer-events-none disabled:opacity-50 outline-none overflow-hidden ",
   {
     variants: {
       state: {
@@ -18,7 +18,7 @@ const stateFulButtonVariants = cva(
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-12 px-6 has-[>svg]:px-4",
+        lg: "h-16 px-10  !rounded-2xl has-[>svg]:px-4",
         icon: "size-9",
       },
     },
@@ -73,7 +73,7 @@ function ButtonContent({
             initial={{ opacity: 0 }}
             animate={{
               opacity: 1,
-              transition: { duration: 0.3, delay: 0.3 },
+              transition: { duration: 0.2, delay: 0.2 },
             }}
           >
             We got something
@@ -84,7 +84,7 @@ function ButtonContent({
       {state === "error" && (
         <motion.span
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, transition: { duration: 0.3, delay: 0.4 } }}
+          animate={{ opacity: 1, transition: { duration: 0.2, delay: 0.3 } }}
           layout="preserve-aspect"
           className="flex items-center gap-2 whitespace-nowrap"
         >
@@ -93,7 +93,7 @@ function ButtonContent({
             animate={{
               opacity: 1,
               x: 0,
-              transition: { duration: 0.3, delay: 0.6 },
+              transition: { duration: 0.2, delay: 0.3 },
             }}
           >
             <X className="size-8 -ml-2 inline-block" />
@@ -139,7 +139,7 @@ function StatefulButton({
       style={{
         borderRadius: 12,
       }}
-      transition={{ type: "spring", bounce: 0.38, visualDuration: 0.2 }}
+      transition={{ type: "spring", bounce: 0.45, visualDuration: 0.2 }}
       {...props}
     >
       <ButtonContent state={state}>{children}</ButtonContent>

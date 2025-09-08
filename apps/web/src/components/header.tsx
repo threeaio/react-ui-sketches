@@ -10,6 +10,7 @@ export default function Header() {
     { to: "/team-viewer", label: "Team Viewer" },
     { to: "/animated-svg", label: "Animated Svg" },
     { to: "/stateful-button", label: "Stateful Button" },
+    { to: "/bento-grid", label: "Bento Grid" },
   ] as const;
 
   return (
@@ -19,7 +20,7 @@ export default function Header() {
           {links.map(({ to, label }) => {
             return (
               <Link
-                className="rounded-lg px-4 py-2 bg-transparent transition-all duration-300 whitespace-nowrap"
+                className="rounded-lg px-5 py-3 bg-transparent transition-all duration-300 whitespace-nowrap uppercase font-bold tracking-widest"
                 key={to}
                 to={to}
                 activeProps={{

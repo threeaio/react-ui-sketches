@@ -33,9 +33,9 @@ export function MorphExtendFromListItem({
     <MySquircle
       layout
       className={cn(
-        "dark:bg-gray-900 bg-gray-100 ",
+        "dark:bg-gray-900 bg-gray-100/50 ",
         isExpanded
-          ? "w-3xl absolute top-[calc(var(--height-header)+1rem)] left-1/2 -translate-x-1/2"
+          ? "w-3xl absolute bg-gray-100/100 top-[calc(var(--height-header)+1rem)] left-1/2 -translate-x-1/2"
           : "",
       )}
       transition={{ type: "spring", bounce: 0.25 }}
