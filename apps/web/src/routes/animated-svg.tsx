@@ -15,7 +15,7 @@ function RouteComponent() {
     "idle",
   );
   return (
-    <div className="flex flex-col items-end justify-center gap-4 max-w-md mx-auto bg-muted p-4 rounded-xl mt-12">
+    <div className="flex flex-col items-end justify-center gap-4 max-w-md mx-auto bg-muted p-4 rounded-xl mt-12 ">
       <div className="flex items-center justify-between w-full mt-6 ">
         <div className="font-medium opacity-50">Bool</div>
         <div>
@@ -91,10 +91,6 @@ function RouteComponent() {
       <div className="flex items-center justify-between w-full bg-background p-4 rounded-xl">
         <div className="flex items-center justify-center">Animate Smile</div>
         <AnimatedSmileState state={state} />
-      </div>
-      <div className="flex items-center justify-between w-full bg-background p-4 rounded-xl">
-        <div className="flex items-center justify-center">Animate Iso Cube</div>
-        <AnimatedIsoCube />
       </div>
     </div>
   );
